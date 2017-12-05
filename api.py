@@ -19,5 +19,11 @@ def api_view(func):
 
 
 @api_view
-def calculate_trip(data):
-    return []
+def calculate_trip(cards):
+    result = []
+    for i in range(0, len(cards)):
+        if cards[i].departure == cards[i+1].destination:
+            pass
+        elif cards[i].destination == cards[i+1].departure:
+            pass
+    return result

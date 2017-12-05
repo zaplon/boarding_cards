@@ -9,7 +9,7 @@ class Field(object):
         if self.required and not val:
             raise Exception(u"the field is required")
 
-    def __get__(self, obj, objtype):
+    def __get__(self, obj):
         return self.value
 
     def __set__(self, obj, val):
