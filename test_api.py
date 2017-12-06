@@ -36,8 +36,7 @@ def test_api_returns_proper_results():
              'seat': 'B45', 'gate': 11}
             ]
     res = calculate_trip(data)
-    print(res)
-    assert len(res) == 5
+    assert len(res) == 4
     assert res[0].startswith('From Paris')
 
     data = []
