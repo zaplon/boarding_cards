@@ -28,13 +28,14 @@ def test_api_properly_process_different_types():
 
 def test_api_returns_proper_results():
     data = [{'departure': 'Warsaw', 'destination': 'Berlin', 'mean_id': 'bus nr 102'},
-            {'departure': 'Rio', 'destination': 'Paris', 'mean_id': 'baloon',
+            {'departure': 'Rio', 'destination': 'New York', 'mean_id': 'baloon',
              'extra': 'baggage will be waiting on the destination point'},
             {'departure': 'Paris', 'destination': 'Warsaw', 'mean_id': 'flight owe/332'},
             {'departure': 'Berlin', 'destination': 'Rio', 'mean_id': 'flight azzz.733'}
             ]
     res = calculate_trip(data)
     assert len(res) == 4
+    assert res[0].find('from Paris to Warsaw') > -1
 
     data = []
     res = calculate_trip(data)
