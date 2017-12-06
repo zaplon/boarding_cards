@@ -14,7 +14,8 @@ def test_boarding_card_validation():
         BoardingCard(departure="Moscow", destination=1, seat_number='AZ/123')
 
     # proper initialization
-    BoardingCard(departure="Stockholm", destination="Warsaw", seat_number="QW.333", extra='baggage to pick up at exit')
+    BoardingCard(departure="Stockholm", destination="Warsaw", seat_number="QW.333", extra='baggage to pick up at exit',
+                 mean_id='flight opq/367')
 
 
 def test_api_properly_process_different_types():
@@ -26,9 +27,26 @@ def test_api_properly_process_different_types():
 
 
 def test_api_returns_proper_results():
-    data = [{'departure': 'Warsaw', 'destination': 'Berlin'},
-            {'departure': 'Rio', 'destination': 'Paris'},
-            {'departure': 'Paris', 'destination': 'Warsaw'},
-            {'departure': 'Berlin', 'destination': 'Rio'}
+    data = [{'departure': 'Warsaw', 'destination': 'Berlin', 'mean_id': 'bus nr 102'},
+            {'departure': 'Rio', 'destination': 'Paris', 'mean_id': 'baloon',
+             'extra': 'baggage will be waiting on the destination point'},
+            {'departure': 'Paris', 'destination': 'Warsaw', 'mean_id': 'flight owe/332'},
+            {'departure': 'Berlin', 'destination': 'Rio', 'mean_id': 'flight azzz.733'}
             ]
-    calculate_trip(data)
+    res = calculate_trip(data)
+    assert len(res) == 4
+
+    data = []
+    res = calculate_trip(data)
+    assert len(res) == 1
+
+    data = [{'departure': 'Barcelona', 'destination': 'Madrid', 'mean_id': 'bus nr 1'},
+            {'departure': 'Baku', 'destination': 'London', 'mean_id': 'flight 23115432'}]
+    res = calculate_trip(data)
+    assert res == ["No solution was found"]
+
+    data = [{'departure': 'Barcelona', 'destination': 'Madrid', 'mean_id': 'bus nr 1'},
+            {'departure': 'Madrid', 'destination': 'Barcelona', 'mean_id': 'bus nr 1'},
+            {'departure': 'Barcelona', 'destination': 'Madrid', 'mean_id': 'bus nr 1'}]
+    res = calculate_trip(data)
+    assert len(res) == 3
