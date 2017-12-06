@@ -9,3 +9,8 @@ pip install -r deps.txt
 ```python
 py.test
 ```
+4. use api from python by envoking
+```python
+from api import calculate_trip
+calculate_trip([{'destination': 'point2', 'departure': 'point1', 'seat': 'D12', 'extra': 'baggage will be transfered', 'mean_id': 'flight OZX/325'}, ...])
+```
