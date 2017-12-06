@@ -39,7 +39,6 @@ def calculate_trip(data):
             elif result[-1].destination == cards[j].departure:
                 result += [cards.pop(j)]
                 break
-    print(result)
     if len(result) != number_of_cards:
         return ["No solution was found"]
     trip_plan = []
