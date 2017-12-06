@@ -49,6 +49,7 @@ class IntegerField(Field):
 class BoardingCard(object, metaclass=BaseModelMeta):
     destination = CharField()
     seat = CharField(required=False)
+    gate = IntegerField(required=False)
     departure = CharField()
     extra = CharField(required=False)
     mean_id = CharField()
@@ -61,8 +62,23 @@ class BoardingCard(object, metaclass=BaseModelMeta):
     def __repr__(self):
         return '%s -> %s' % (self.departure, self.destination)
 
+    @property
+    def details(self):
+        parts = []
+        sentences = ['']
+        if self.gate:
+            parts.append('go to gate %s' % self.gate)
+        if self.seat:
+             parts.append('seat %s' % self.seat)
+        text = ', '.join(parts)
+        if len(parts) > 0:
+            text = text[0].upper() + text[1:]
+            sentences.append(text)
+        if self.extra:
+            sentences.append(self.extra.title())
+        return '. '.join(sentences)
+
     def __str__(self):
         data = {'departure': self.departure.title(), 'destination': self.destination.title(), 'mean_id': self.mean_id,
-                'extra': ' ' + self.extra if self.extra else '',
-                'seat': 'no sit were assigned' if not self.seat else self.seat}
-        return "%(mean_id)s %(seat)s from %(departure)s to %(destination)s.%(extra)s" % data
+                'details': self.details}
+        return "From %(departure)s, %(mean_id)s to %(destination)s%(details)s." % data
