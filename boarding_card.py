@@ -55,9 +55,9 @@ class BoardingCard(object, metaclass=BaseModelMeta):
     mean_id = CharField()
 
     def __init__(self, **kwargs):
-        for k,v in self.__class__.__dict__.items() :
+        for k, v in self.__class__.__dict__.items():
             if issubclass(v.__class__, Field):
-                 setattr(self, k, kwargs.get(k, None))
+                setattr(self, k, kwargs.get(k, None))
 
     def __repr__(self):
         return '%s -> %s' % (self.departure, self.destination)
@@ -69,7 +69,7 @@ class BoardingCard(object, metaclass=BaseModelMeta):
         if self.gate:
             parts.append('go to gate %s' % self.gate)
         if self.seat:
-             parts.append('seat %s' % self.seat)
+            parts.append('seat %s' % self.seat)
         text = ', '.join(parts)
         if len(parts) > 0:
             text = text[0].upper() + text[1:]
