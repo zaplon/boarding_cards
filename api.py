@@ -24,24 +24,31 @@ def api_view(func):
 def calculate_trip(data):
     if type(data) is not list:
         raise Exception("List should be provided")
-    if len(data) == 0:
+    data_size = len(data)
+    if data_size == 0:
         return ["No data was provided"]
-    cards = []
-    for d in data:
-        cards.append(BoardingCard(**d))
-    number_of_cards = len(cards)
-    result = [cards.pop(0)]
-    for i in range(0, len(cards)):
-        for j in range(0, len(cards)):
-            if result[0].departure == cards[j].destination:
-                result.insert(0, cards.pop(j))
-                break
-            elif result[-1].destination == cards[j].departure:
-                result += [cards.pop(j)]
-                break
-    if len(result) != number_of_cards:
+    cards = [BoardingCard(**data[0])]
+    look_up = {'destinations': {cards[0].destination: 0}, 'departures': {cards[0].departure: 0}}
+    result = [0]
+    for i in range(1, data_size + 1):
+        if len(result) == data_size:
+            break
+        if i < data_size:
+            cards.append(BoardingCard(**data[i]))
+            look_up['destinations'][cards[i].destination] = i
+            look_up['departures'][cards[i].departure] = i
+        try:
+            result.insert(0, look_up['destinations'][cards[result[0]].departure])
+            continue
+        except KeyError:
+            pass
+        try:
+            result.append(look_up['departures'][cards[result[-1]].destination])
+        except KeyError:
+            pass
+    if len(result) != len(data):
         return ["No solution was found"]
     trip_plan = []
     for r in result:
-        trip_plan.append(r.__str__())
+        trip_plan.append(cards[r].__str__())
     return trip_plan
