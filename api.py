@@ -31,12 +31,12 @@ def calculate_trip(data):
     look_up = {'destinations': {cards[0].destination: 0}, 'departures': {cards[0].departure: 0}}
     result = [0]
     for i in range(1, data_size + 1):
-        if len(result) == data_size:
-            break
         if i < data_size:
             cards.append(BoardingCard(**data[i]))
             look_up['destinations'][cards[i].destination] = i
             look_up['departures'][cards[i].departure] = i
+        elif len(result) == data_size:
+            break
         try:
             result.insert(0, look_up['destinations'][cards[result[0]].departure])
             continue

@@ -53,3 +53,7 @@ def test_api_returns_proper_results():
             {'departure': 'Barcelona', 'destination': 'Madrid', 'mean_id': 'bus nr 1'}]
     res = calculate_trip(data)
     assert len(res) == 3
+
+    data = [{'departure': 'Barcelona', 'destination': 'Barcelona', 'mean_id': 'bus nr 1'}]
+    res = calculate_trip(data)
+    assert len(res) == 1
