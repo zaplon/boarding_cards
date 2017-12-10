@@ -1,4 +1,5 @@
 import json
+from collections import deque
 
 from boarding_card import BoardingCard
 
@@ -30,14 +31,14 @@ def calculate_trip(data):
     for d in data:
         cards.append(BoardingCard(**d))
     number_of_cards = len(cards)
-    result = [cards.pop(0)]
+    result = deque([cards.pop(0)], maxlen=number_of_cards)
     for i in range(0, len(cards)):
         for j in range(0, len(cards)):
             if result[0].departure == cards[j].destination:
-                result.insert(0, cards.pop(j))
+                result.appendleft(cards.pop(j))
                 break
             elif result[-1].destination == cards[j].departure:
-                result += [cards.pop(j)]
+                result.append(cards.pop(j))
                 break
     if len(result) != number_of_cards:
         return ["No solution was found"]
