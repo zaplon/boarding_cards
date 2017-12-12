@@ -9,6 +9,7 @@ class BoardingCard(object):
         self.extra = kwargs.get('extra', None)  # non-obligatory additional info like baggage transfer
         self.seat = kwargs.get('seat', None)  # non-obligatory
         self.gate = kwargs.get('geat', None)  # non-obligatory gate number
+
     # for nice display in python console
     def __repr__(self):
         return '%s -> %s' % (self.departure, self.destination)
@@ -28,6 +29,7 @@ class BoardingCard(object):
         if self.extra:
             sentences.append(self.extra.title())
         return '. '.join(sentences)
+
     # human-readable instructions
     def __str__(self):
         data = {'departure': self.departure.title(), 'destination': self.destination.title(), 'mean_id': self.mean_id,
