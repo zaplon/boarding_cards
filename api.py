@@ -4,6 +4,7 @@ from collections import deque
 from boarding_card import BoardingCard
 
 
+# decorator that ensures proper input and output formats
 def api_view(func):
     def wrapper(data):
         parsers = [(list, list), (json.loads, json.dumps)]
@@ -23,30 +24,36 @@ def api_view(func):
 
 @api_view
 def calculate_trip(data):
+
     if type(data) is not list:
         raise Exception("List should be provided")
     data_size = len(data)
     if data_size == 0:
         return ["No data was provided"]
-    cards = [BoardingCard(**data[0])]
-    look_up = {'destinations': {cards[0].destination: 0}, 'departures': {cards[0].departure: 0}}
-    result = deque([0], maxlen=data_size)
-    for i in range(1, data_size + 1):
-        if i < data_size:
-            cards.append(BoardingCard(**data[i]))
-            look_up['destinations'][cards[i].destination] = i
-            look_up['departures'][cards[i].departure] = i
-        elif len(result) == data_size:
-            break
+
+    def add_card(cards, look_up):
         try:
             result.appendleft(look_up['destinations'][cards[result[0]].departure])
-            continue
         except KeyError:
-            pass
-        try:
-            result.append(look_up['departures'][cards[result[-1]].destination])
-        except KeyError:
-            pass
+            try:
+                result.append(look_up['departures'][cards[result[-1]].destination])
+            except KeyError:
+                pass
+
+    # initialization
+    result = deque([], maxlen=data_size)
+    cards = []
+    look_up = {'destinations': {}, 'departures': {}}
+
+    for i, card in enumerate(data):
+        if len(result) == 0:
+            result.append(0)
+        cards.append(BoardingCard(**card))
+        look_up['destinations'][cards[i].destination] = i
+        look_up['departures'][cards[i].departure] = i
+        add_card(cards, look_up)
+    add_card(cards, look_up)
+
     if len(result) != len(data):
         return ["No solution was found"]
     trip_plan = []
