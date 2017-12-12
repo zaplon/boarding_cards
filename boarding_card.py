@@ -1,9 +1,9 @@
 class BoardingCard(object):
 
     def __init__(self, **kwargs):
-        destination = kwargs['destination']
-        departure = kwargs['departure']
-        if not (type(destination) is str and type(departure) is str):
+        self.destination = kwargs['destination']
+        self.departure = kwargs['departure']
+        if not (type(self.destination) is str and type(self.departure) is str):
             raise Exception("Departure and destination should be strings")
         self.mean_id = kwargs.get('mean_id')  # for example bus number, flight number
         self.extra = kwargs.get('extra', None)  # non-obligatory additional info like baggage transfer

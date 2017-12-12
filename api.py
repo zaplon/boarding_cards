@@ -33,21 +33,22 @@ def calculate_trip(data):
 
     def add_card(cards, look_up):
         try:
+            # check if card fits at the begging
             result.appendleft(look_up['destinations'][cards[result[0]].departure])
         except KeyError:
             try:
+                # so maybe it fits at the end?
                 result.append(look_up['departures'][cards[result[-1]].destination])
             except KeyError:
                 pass
 
     # initialization
-    result = deque([], maxlen=data_size)
+    # deque is faster in appending at both ends than list
+    result = deque([0], maxlen=data_size)
     cards = []
     look_up = {'destinations': {}, 'departures': {}}
 
     for i, card in enumerate(data):
-        if len(result) == 0:
-            result.append(0)
         cards.append(BoardingCard(**card))
         look_up['destinations'][cards[i].destination] = i
         look_up['departures'][cards[i].departure] = i
