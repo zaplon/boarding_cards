@@ -23,6 +23,7 @@ def api_view(func):
 
 
 @api_view
+# data should be a list of boarding cards. Each boarding cards requires at least destination, departure and mean_id
 def calculate_trip(data):
 
     if type(data) is not list:
@@ -30,7 +31,7 @@ def calculate_trip(data):
     data_size = len(data)
     if data_size == 0:
         return ["No data was provided"]
-
+    
     def add_card(cards, look_up):
         try:
             # check if card fits at the begging
@@ -46,8 +47,9 @@ def calculate_trip(data):
     # deque is faster in appending at both ends than list
     result = deque([0], maxlen=data_size)
     cards = []
+    # look_up collects knowledge while iterating over boarding cards list
     look_up = {'destinations': {}, 'departures': {}}
-
+   
     for i, card in enumerate(data):
         cards.append(BoardingCard(**card))
         look_up['destinations'][cards[i].destination] = i
