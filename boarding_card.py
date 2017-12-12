@@ -8,7 +8,7 @@ class BoardingCard(object):
         self.mean_id = kwargs.get('mean_id')  # for example bus number, flight number
         self.extra = kwargs.get('extra', None)  # non-obligatory additional info like baggage transfer
         self.seat = kwargs.get('seat', None)  # non-obligatory
-        self.gate = kwargs.get('geat', None)  # non-obligatory gate number
+        self.gate = kwargs.get('gate', None)  # non-obligatory gate number
 
     # for nice display in python console
     def __repr__(self):
