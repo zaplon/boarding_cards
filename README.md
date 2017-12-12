@@ -1,7 +1,7 @@
 # boarding_cards
 ## How to use
 1. use python 3 (tested with python 3.4, 3.5, 3.6)
-  * you can also tray different python versions with docker. For example for python 3.5 (in the project directory):
+  * you can also tray different python versions with docker. For example for python 3.5 run (in the project directory):
 ```bash
 docker run -v $PWD:/code -w /code -it python:3.5 bash
 ```
