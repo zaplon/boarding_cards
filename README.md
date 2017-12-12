@@ -10,7 +10,7 @@ docker run -v $PWD:/code -w /code -it python:3.5 bash
 ```python
 pip3 install -r deps.txt
 ```
-4. run tests by running 
+4. run tests from py.test
 ```python
 py.test
 ```
