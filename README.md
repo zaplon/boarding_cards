@@ -1,11 +1,11 @@
 # boarding_cards
 ## How to use
 1. use python 3 (tested with python 3.4, 3.5, 3.6)
-2. cd to the project directory
-  * you can also tray different python versions with docker by typing in the project directory:
+  * you can also tray different python versions with docker. For example for python 3.5 (in the project directory):
 ```bash
 docker run -v $PWD:/code -w /code -it python:3.5 bash
 ```
+2. cd to the project directory
 3. install deps with
 ```python
 pip3 install -r deps.txt
