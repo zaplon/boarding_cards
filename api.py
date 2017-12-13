@@ -33,6 +33,7 @@ def calculate_trip(data):
         return ["No data was provided"]
     
     def add_card(cards, look_up):
+        print(cards, result)
         try:
             # check if card fits at the begging
             result.appendleft(look_up['destinations'][cards[result[0]].departure])
@@ -55,7 +56,9 @@ def calculate_trip(data):
         look_up['destinations'][cards[i].destination] = i
         look_up['departures'][cards[i].departure] = i
         add_card(cards, look_up)
-    add_card(cards, look_up)
+    # finish the task using completed look_up table
+    for i in range(data_size - len(result)):
+        add_card(cards, look_up)
 
     if len(result) != len(data):
         return ["No solution was found"]

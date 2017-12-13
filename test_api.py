@@ -27,16 +27,17 @@ def test_api_properly_process_different_types():
 
 
 def test_api_returns_proper_results():
-    data = [{'departure': 'Warsaw', 'destination': 'Berlin', 'mean_id': 'bus nr 102'},
+    data = [{'departure': 'Warsaw', 'destination': 'Prague', 'mean_id': 'bus nr 102'},
             {'departure': 'Rio', 'destination': 'New York', 'mean_id': 'baloon',
              'extra': 'baggage will be waiting on the destination point'},
             {'departure': 'Paris', 'destination': 'Warsaw', 'mean_id': 'flight owe/332',
              'gate': 22},
+            {'departure': 'Brno', 'destination': 'Berlin', 'mean_id': 'stolen bike'},
             {'departure': 'Berlin', 'destination': 'Rio', 'mean_id': 'flight azzz.733',
-             'seat': 'B45', 'gate': 11}
-            ]
+             'seat': 'B45', 'gate': 11},
+            {'departure': 'Prague', 'destination': 'Brno', 'mean_id': 'bus 120'}]
     res = calculate_trip(data)
-    assert len(res) == 4
+    assert len(res) == 6
     assert res[0].startswith('From Paris')
 
     data = []
