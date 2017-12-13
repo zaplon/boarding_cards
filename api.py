@@ -33,7 +33,6 @@ def calculate_trip(data):
         return ["No data was provided"]
     
     def add_card(cards, look_up):
-        print(cards, result)
         try:
             # check if card fits at the begging
             result.appendleft(look_up['destinations'][cards[result[0]].departure])
