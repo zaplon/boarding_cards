@@ -14,6 +14,10 @@ pip3 install -r deps.txt
 ```python
 py.test
 ```
+  * you can see example output by adding -s switch to py.test 
+```python
+py.test -s
+```
 5. use api from python with
 ```python
 from api import calculate_trip
