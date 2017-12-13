@@ -27,7 +27,7 @@ class BoardingCard(object):
             text = text[0].upper() + text[1:]
             sentences.append(text)
         if self.extra:
-            sentences.append(self.extra.title())
+            sentences.append(self.extra[0].upper() + self.extra[1:])
         return '. '.join(sentences)
 
     # human-readable instructions
