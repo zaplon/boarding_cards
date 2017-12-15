@@ -1,11 +1,14 @@
 class BoardingCard(object):
 
     def __init__(self, **kwargs):
-        self.destination = kwargs['destination']
-        self.departure = kwargs['departure']
+        try:
+            self.destination = kwargs['destination']
+            self.departure = kwargs['departure']
+            self.mean_id = kwargs.get('mean_id')  # for example bus number, flight number
+        except KeyError as e:
+            raise Exception("field %s is required" % e.args[0])
         if not (type(self.destination) is str and type(self.departure) is str):
             raise Exception("Departure and destination should be strings")
-        self.mean_id = kwargs.get('mean_id')  # for example bus number, flight number
         self.extra = kwargs.get('extra', None)  # non-obligatory additional info like baggage transfer
         self.seat = kwargs.get('seat', None)  # non-obligatory
         self.gate = kwargs.get('gate', None)  # non-obligatory gate number
