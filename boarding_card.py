@@ -4,7 +4,7 @@ class BoardingCard(object):
         try:
             self.destination = kwargs['destination']
             self.departure = kwargs['departure']
-            self.mean_id = kwargs.get('mean_id')  # for example bus number, flight number
+            self.mean_id = kwargs['mean_id']  # for example bus number, flight number
         except KeyError as e:
             raise Exception("field %s is required" % e.args[0])
         if not (type(self.destination) is str and type(self.departure) is str):
