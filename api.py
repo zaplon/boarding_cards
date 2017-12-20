@@ -61,7 +61,4 @@ def calculate_trip(data):
 
     if len(result) != len(data):
         return ["No solution was found"]
-    trip_plan = []
-    for r in result:
-        trip_plan.append(cards[r].__str__())
-    return trip_plan
+    return [cards[r].__str__() for r in result]
